@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-Br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Perguntas</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <h1>Guia Perguntas</h1>
+    
+    <ul>
+            <!-- carregando as variáveis do ejs -->
+        <li><%= nome %></li>
+        <li><%= lang %></li>
+        <li><%= empresa %></li>
+          <!--Fim-->
+    </ul>
+
+    <!--Estrutura condicional no ejs-->
+    <% if(msg == true){ %>
+        <h3>Essa mensagem aparece se for true</h3>
+        <% } else{ %>
+            <h4>Essa mensagem aparece se for false</h4>
+            <% } %>
+        <!--Fim-->
+
+        <!--For each ejs-->
+        <!--Pega o array de produtos e passa para a variavel (produto) e para cada objeto dentro do array ele repete mais uma vez-->
+        <% produtos.forEach( (produto)=>{ %>
+            <hr>
+            <h4><%= produto.nome %> </h4>
+            <p><%= produto.preco %></p>
+            
+            <% }) %>
+
+            <!--Fim-->
+</body>
+</html>
