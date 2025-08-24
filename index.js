@@ -1,40 +1,54 @@
 const express = require('express')
 const app = express()
-
+const connection = require('./database/db')
 const PORT = 3000
+const perguntaModel = require('./database/Pergunta')
+
+
+//database
+connection.authenticate().then(()=>{
+    console.log('conexão feita com o banco de dados!')
+}).catch((err)=>{
+    console.error(err)
+})
 
 //inicia o ejs
 app.set('view engine','ejs')
 
+//body parser
+app.use(express.urlencoded({extended:false}))
+app.use(express.json())
+
+//Configura de onde virão os arquivos estáticos
 app.use(express.static('public'))
 
-app.get('/:nome/:lang',(req,res)=>{
-    //variáveis para exibir no ejs
-    const nome = req.params.nome //Careegando os dados dinamicamente de acordo com os parametros passados na ulr
-    const lang = req.params.lang
 
-    const exibirMsg = false
+//ROTAS
 
-    const produtos = [
-        {nome: 'mousepad', preco:25.40},
-        {nome: 'monitor 24 pol', preco:654.90},
-        {nome: 'pendrive', preco:22.00},
-
-    ]
-
-    //index da pasta views
-    res.render('index',{
-        //vamos enviar as variávies para a página index
-        nome:nome,
-        lang:lang,
-        //Podemos também enviar dados diretamente por aqui antes de declarar
-        empresa: "Sem dono",
-        ano:2025,
-        msg: exibirMsg, //mensagem exibe de acordo com a condição
-        produtos:produtos //passa o array de produtos para o ejs
-    })
+//Página inicial do app
+app.get('/',(req,res)=>{
+    res.render('index')
 })
 
+//Página de perguntas
+app.get('/perguntar',(req,res)=>{
+    res.render('perguntar')
+})
+
+//salvar perguntas
+app.post('/salvarpergunta', (req,res)=>{
+    //salva o conteudo do formulario titulo e descrição 
+    const titulo = req.body.titulo
+    const descricao = req.body.descricao
+    res.send('Formulário recebido!')
+})
+
+
+
+
+
+
+//roda o servidor 
 app.listen(PORT,()=>{
     console.log('App rodando!')
 })
