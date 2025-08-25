@@ -1,0 +1,39 @@
+<%- include('partials/header.ejs') %>
+<body>
+  <%- include('partials/navbar.ejs') %>
+
+  <div class="container">
+
+    <h3><%= pergunta.titulo %></h3>
+
+    <%= pergunta.descricao %>
+    <hr />
+    <form method="post" action="/responder">
+      <h3>Responda</h3>
+      <label>Resposta:</label>
+      <textarea
+        name="corpo"
+        placeholder="Digite sua resposta"
+        class="form-control mt-2"
+      ></textarea>
+      <input type="hidden" name="pergunta" value=" <%= pergunta.id %>" />
+      <button type="submit" class="btn btn-primary mt-2">Responder</button>
+    </form>
+    <hr>
+    <h3>Respostas</h3>
+    <!--Para cada respostas enviada pela rota mostra em resposta em lista-->
+    <ul class="mb-4">
+        <% respostas.forEach(resposta =>{ %>
+            <div class="card mt-2 ps-2">
+                <div class="card-body">
+                    <li> <%= resposta.corpo %> </li>
+                    <!--new Date(resposta.createdAt).toLocaleString('pt-BR')
+                    formata a data para o padrão brasileiro-->
+                    <p class="text-success mt-2">Respondida em: <%= new Date(resposta.createdAt).toLocaleString('pt-BR') %></p>
+                </div>
+            </div>
+            <% })%>
+    </ul>
+  </div>
+</body>
+<%- include('partials/footer.ejs') %>
